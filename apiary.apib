@@ -1,7 +1,7 @@
 FORMAT: 1A
 HOST:http://195.154.227.44:8080
 
-# ClanOfTheCloud Backoffice
+# bo-clanofthecloud API
 
 [CloudBuilder](http://www.clanofthecloud.com) is a Mobile Gaming Backend as a Service (Baas) Company. You can create an account on our website, 
 and try us with your next social game! We're scalable, multiplateform and we offer a full API.
@@ -17,7 +17,7 @@ Every request should have one header set with your credentials :
 
 # Group Company
 
-Give information about company games and domains
+Give information about games and domains handled by your company
 
 ## Company [/api/v1/company]
 ### Get Company [GET]
@@ -108,8 +108,8 @@ Give information about company games and domains
               }
             } 
 
-## Game data  [/api/v1/game/{game}/storage/{domain}]
-### List all data [GET]
+## Game VFS  [/api/v1/game/{game}/storage/{domain}]
+### List all key-value [GET]
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -128,7 +128,7 @@ Give information about company games and domains
         {"fskey": "key02", "fsvalue": "value of key02"}
         ]
 
-### Change all data [POST]
+### Replace data [POST]
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -151,8 +151,8 @@ Give information about company games and domains
 + Response 200 (application/json)
 
 
-## Game data by key  [/api/v1/game/{game}/storage/{domain}/{key}]
-### Read key [GET]
+## Single Game VFS  [/api/v1/game/{game}/storage/{domain}/{key}]
+### Read one key [GET]
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -171,7 +171,7 @@ Give information about company games and domains
             "key01": "value of key01"
         }
 
-### Write key [PUT]
+### Write one key [PUT]
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -195,9 +195,117 @@ Give information about company games and domains
         }
 
 
+## Leaderboards [/api/v1/game/{game}/domain/{domain}/leaderboard/{board}{?limit,skip}]
+### highscore for a board [GET]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + domain (required, string, `private`) ... 
+    + board (required, string, `testboard`) ...
+    + limit = `10` (optional, number, `10`) ... number of desired responses
+    + skip = `0` (optional, number, `0`) ... skip the `skip` firsts responses
+
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+
++ Response 200 (application/json)
+
+            {
+              "testboard": {
+                "maxpage": 1,
+                "page": 1,
+                "rankOfFirst": 1,
+                "scores": [
+                  {
+                    "score": {
+                      "timestamp": "2014-12-15T09:30:56.303Z",
+                      "score": 1400,
+                      "info": null
+                    },
+                    "gamer_id": "5476c2c59ae8e8f922fb70ba",
+                    "profile": {
+                      "displayName": "Gamer",
+                      "lang": "en",
+                      "addr1": "test"
+                    }
+                  },
+                  {
+                    "score": {
+                      "timestamp": "2014-12-15T14:27:06.242Z",
+                      "score": 1200,
+                      "info": null
+                    },
+                    "gamer_id": "5476c2e69ae8e8f922fb70bc",
+                    "profile": {
+                      "displayName": "Guest",
+                      "lang": "en"
+                    }
+                  },
+                  {
+                    "score": {
+                      "timestamp": "2014-10-22T10:09:19.500Z",
+                      "score": 140,
+                      "info": "with Donald"
+                    },
+                    "gamer_id": "541429b6dc346f01314edef3",
+                    "profile": {
+                      "displayName": "Guest",
+                      "lang": "en",
+                      "addr1": "test"
+                    }
+                  },
+                  {
+                    "score": {
+                      "timestamp": "2014-09-26T15:53:39.880Z",
+                      "score": 140,
+                      "info": "with Donald"
+                    },
+                    "gamer_id": "541189411ea82ffa76b7b72a",
+                    "profile": {
+                      "displayName": "Gamer",
+                      "lang": "en",
+                      "addr1": "test"
+                    }
+                  }
+                ]
+              }
+            } 
+            
+
+## Achievements [/api/v1/game/{game}/achievements/{domain}]
+### list Achievements [GET]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + domain (required, string, `private`) ... 
+
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+
++ Response 200 (application/json)
+
+            {
+                "jumper": {
+                "type": "limit",
+                "config": {
+                  "unit": "jump",
+                  "maxValue": "10"
+                }
+              }
+            }     
+
+
 # Group Users
-## Users list [/api/v1/game/{game}/users{?limit,skip}]
-### Read [GET]
+## Members [/api/v1/game/{game}/users{?limit,skip}]
+### list gamers for a game [GET]
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -244,7 +352,7 @@ Give information about company games and domains
         }
 
 ## User profile [/api/v1/game/{game}/user/{userid}/profile]
-### Get profile [GET]
+### Get global user profile [GET]
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -263,7 +371,7 @@ Give information about company games and domains
           "lang": "en"
         } 
 
-### Change profile [POST]
+### Change global user profile [POST]
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -293,7 +401,7 @@ Give information about company games and domains
         } 
 
 ## User Properties [/api/v1/game/{game}/user/{userid}/domain/{domain}/properties]
-### Get properties [GET]
+### Get user properties [GET]
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -540,112 +648,6 @@ the response is the new balance for this currency
             }    
 
 
-## Leaderboards [/api/v1/game/{game}/domain/{domain}/leaderboard/{board}{?limit,skip}]
-### list highscore [GET]
-
-+ Parameters
-    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
-    + domain (required, string, `private`) ... 
-    + board (required, string, `testboard`) ...
-    + limit = `10` (optional, number, `10`) ... number of desired responses
-    + skip = `0` (optional, number, `0`) ... skip the `skip` firsts responses
-
-
-+ Request (application/json)
-
-    + Headers
-    
-                Authorization : Basic dXNlcjpwYXNzd29yZA==
-
-+ Response 200 (application/json)
-
-            {
-              "testboard": {
-                "maxpage": 1,
-                "page": 1,
-                "rankOfFirst": 1,
-                "scores": [
-                  {
-                    "score": {
-                      "timestamp": "2014-12-15T09:30:56.303Z",
-                      "score": 1400,
-                      "info": null
-                    },
-                    "gamer_id": "5476c2c59ae8e8f922fb70ba",
-                    "profile": {
-                      "displayName": "Gamer",
-                      "lang": "en",
-                      "addr1": "test"
-                    }
-                  },
-                  {
-                    "score": {
-                      "timestamp": "2014-12-15T14:27:06.242Z",
-                      "score": 1200,
-                      "info": null
-                    },
-                    "gamer_id": "5476c2e69ae8e8f922fb70bc",
-                    "profile": {
-                      "displayName": "Guest",
-                      "lang": "en"
-                    }
-                  },
-                  {
-                    "score": {
-                      "timestamp": "2014-10-22T10:09:19.500Z",
-                      "score": 140,
-                      "info": "with Donald"
-                    },
-                    "gamer_id": "541429b6dc346f01314edef3",
-                    "profile": {
-                      "displayName": "Guest",
-                      "lang": "en",
-                      "addr1": "test"
-                    }
-                  },
-                  {
-                    "score": {
-                      "timestamp": "2014-09-26T15:53:39.880Z",
-                      "score": 140,
-                      "info": "with Donald"
-                    },
-                    "gamer_id": "541189411ea82ffa76b7b72a",
-                    "profile": {
-                      "displayName": "Gamer",
-                      "lang": "en",
-                      "addr1": "test"
-                    }
-                  }
-                ]
-              }
-            } 
-            
-
-## Achievements [/api/v1/game/{game}/achievements/{domain}]
-### list Achievements [GET]
-
-+ Parameters
-    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
-    + domain (required, string, `private`) ... 
-
-
-+ Request (application/json)
-
-    + Headers
-    
-                Authorization : Basic dXNlcjpwYXNzd29yZA==
-
-+ Response 200 (application/json)
-
-            {
-                "jumper": {
-                "type": "limit",
-                "config": {
-                  "unit": "jump",
-                  "maxValue": "10"
-                }
-              }
-            }     
   
           
 ## Event [/api/v1/game/{game}/user/{userid}/message/{domain}]
@@ -700,9 +702,6 @@ the response is the new balance for this currency
             {
             }                
                    
-                        
-# Group todo
-route.get "/game/:game/user/:userid/domain/:domain/bestscores", (req, res, next)->
 
 
 
