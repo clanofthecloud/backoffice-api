@@ -1,0 +1,709 @@
+FORMAT: 1A
+HOST:http://195.154.227.44:8080
+
+# bo-clanofthecloud API
+
+[CloudBuilder](http://www.clanofthecloud.com) is a Mobile Gaming Backend as a Service (Baas) Company. You can create an account on our website, 
+and try us with your next social game! We're scalable, multiplateform and we offer a full API.
+
+## User/Password Authentication
+
+Once you've created an account, you can provision a Game in the FrontOffice application in either sandbox or production mode.
+We're using a classic User/ Password couple to authenticate all requests.
+
+Every request should have one header set with your credentials :
+
+**Authorization : Basic encode64(user:password)**
+
+# Group Company
+
+Give information about company games and domains
+
+## Company [/api/v1/company]
+### Get Company [GET]
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+                
++ Response 200 (application/json)
+
+        {
+          "email": "user",
+          "name": "user"
+          "games": [
+            {
+              "name": "com.clanofthecloud.cloudbuilder",
+              "domains": [
+                "private",
+                "com.clanofthecloud.cloudbuilder.test"
+              ]
+            },
+            {
+              "name": "com.clanofthecloud.testgame",
+              "domains": [
+                "private"
+              ]
+            }
+          ],
+        }    
+
+# Group Game 
+
+## Game details [/api/v1/game/{game}]
+## GET
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+                
++ Response 200 (application/json)
+
+            {
+              "_id": "541715e10476afa004fc3b82",
+              "appid": "com.clanofthecloud.cloudbuilder",
+              "registerTime": "2014-09-15T16:37:53.115Z",
+              "config": {
+                "enable": true,
+                "domains": [
+                  "com.clanofthecloud.cloudbuilder.m3Nsd85GNQd3",
+                  "com.clanofthecloud.cloudbuilder.test"
+                ]
+              },
+              "leaderboards": {
+                "testboard": {
+                  "order": "hightolow"
+                },
+                "My_Leaderboard": {
+                  "order": "hightolow"
+                }
+              },
+              "certs": {
+                "android": {
+                  "enable": false,
+                  "senderID": "",
+                  "apikey": ""
+                },
+                "ios": {
+                  "enable": false,
+                  "cert": "",
+                  "key": "",
+                  "certData": "",
+                  "keyData": ""
+                },
+                "macos": {
+                  "enable": false,
+                  "cert": "",
+                  "key": "",
+                  "certData": "",
+                  "keyData": ""
+                }
+              }
+            } 
+
+## Game data  [/api/v1/game/{game}/storage/{domain}]
+### List all data [GET]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + domain (required, string, `private`) ... the involved domain private is default one 
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+                
++ Response 200 (application/json)
+
+        [ 
+        {"fskey": "key01", "fsvalue": "value of key01"}, 
+        {"fskey": "key02", "fsvalue": "value of key02"}
+        ]
+
+### Change all data [POST]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + domain (required, string, `private`) ... the involved domain private is default one 
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+
+    + Body 
+        
+            [ 
+            {"fskey": "key01", "fsvalue": "value of key01"}, 
+            {"fskey": "key02", "fsvalue": "value of key02"}
+            ]
+        
+        
++ Response 200 (application/json)
+
+
+## Game data by key  [/api/v1/game/{game}/storage/{domain}/{key}]
+### Read key [GET]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + domain (required, string, `private`) ... the involved domain private is default one 
+    + key (required, string, `key01`) ... the desired key 
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+                
++ Response 200 (application/json)
+
+        {
+            "key01": "value of key01"
+        }
+
+### Write key [PUT]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + domain (required, string, `private`) ... the involved domain private is default one 
+    + key (required, string, `key01`) ... the desired key 
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+
+    + Body 
+        
+            "new value of key 01"
+        
++ Response 200 (application/json)
+
+        {
+          "done": 1
+        }
+
+
+# Group Users
+## Users list [/api/v1/game/{game}/users{?limit,skip}]
+### Read [GET]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + limit = `10` (optional, number, `10`) ... number of desired responses
+    + skip = `0` (optional, number, `0`) ... skip the `skip` firsts responses
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+                
++ Response 200 (application/json)
+
+        {
+            "total" : 553,
+            "list": [
+            {
+              "_id": "543260a89df16e023471dd22",
+              "network": "anonymous",
+              "networkid": "543260a89df16e023471dd21",
+              "registerTime": "2014-10-06T09:28:08.189Z",
+              "registerBy": "com.clanofthecloud.cloudbuilder",
+              "games": [
+                {
+                  "appid": "com.clanofthecloud.cloudbuilder",
+                  "ts": "2014-10-06T09:28:08.189Z"
+                }
+              ],
+              "profile": {
+                "displayName": "Guest",
+                "lang": "en"
+              },
+              "devices": [
+                {
+                  "ts": "2014-10-06T09:28:08.204Z",
+                  "ip": "10.0.2.2",
+                  "sdk": "1.9.3"
+                }
+              ],
+              "mqPending": 0,
+              "mqTimedout": 0
+            }
+        }
+
+## User profile [/api/v1/game/{game}/user/{userid}/profile]
+### Get profile [GET]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + userid (required, string, `543260a89df16e023471dd22`) ... 
+    
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+                
++ Response 200 (application/json)
+
+        {
+          "displayName": "Guest",
+          "lang": "en"
+        } 
+
+### Change profile [POST]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + userid (required, string, `543260a89df16e023471dd22`) ... 
+    
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+                
+    + Body
+    
+            {
+              "displayName": "My Name",
+              "lang": "fr"
+            } 
+
++ Response 200 (application/json)
+
+        {
+          "done": 1,
+          "profile" :  {
+            "displayName": "My Name",
+            "lang": "en"
+            }
+        } 
+
+## User Properties [/api/v1/game/{game}/user/{userid}/domain/{domain}/properties]
+### Get properties [GET]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + userid (required, string, `543260a89df16e023471dd22`) ... 
+    + domain (required, string, `private`) ... 
+    
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+                
++ Response 200 (application/json)
+
+        {
+          "prop1": "value1",
+          "prop2": "value2"
+        } 
+
+### Change properties [POST]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + userid (required, string, `543260a89df16e023471dd22`) ... 
+    + domain (required, string, `private`) ... 
+    
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+                
+    + Body
+    
+            {
+              "prop1": "value1",
+              "prop2": "value2"
+            } 
+
++ Response 200 (application/json)
+
+        {
+          "done": 1,
+        } 
+
+## friends [/api/v1/game/{game}/user/{userid}/friends/{domain}]
+## List friends [GET]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + userid (required, string, `543260a89df16e023471dd22`) ... 
+    + domain (required, string, `private`) ... 
+    
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+                
++ Response 200 (application/json)
+
+        {
+          "friends": [],
+          "blackList": []
+        }   
+
+
+## relation [/api/v1/game/{game}/user/{userid}/friend/{domain}/{friendid}]
+## forget friend [DELETE]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + userid (required, string, `543260a89df16e023471dd22`) ... 
+    + domain (required, string, `private`) ... 
+    + friendid (required, string, `54326176374a7c03344ba9fa`) ... 
+   
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+                
++ Response 200 (application/json)
+
+        {
+          "done": 1
+        }   
+
+## sponsoring [/api/v1/game/{game}/user/{userid}/friends/{domain}/god]
+### list godfather and godchildren [GET]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + userid (required, string, `543260a89df16e023471dd22`) ... 
+    + domain (required, string, `private`) ... 
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+                
++ Response 200 (application/json)
+
+        {
+          "godfather": null,
+          "godchildren": []
+        } 
+    
+## Storage [/api/v1/game/{game}/user/{userid}/storage/{domain}]
+### Get Data [GET]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + userid (required, string, `543260a89df16e023471dd22`) ... 
+    + domain (required, string, `private`) ... 
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+                
++ Response 200 (application/json)
+
+        [ 
+        {"fskey": "key01", "fsvalue": "value of key01"}, 
+        {"fskey": "key02", "fsvalue": "value of key02"}
+        ]
+
+
+### Set Data [POST]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + userid (required, string, `543260a89df16e023471dd22`) ... 
+    + domain (required, string, `private`) ... 
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+                
+    + Body 
+        
+            [ 
+            {"fskey": "key01", "fsvalue": "value of key01"}, 
+            {"fskey": "key02", "fsvalue": "value of key02"}
+            ]
+        
++ Response 200 (application/json)
+
+
+## Balance [/api/v1/game/{game}/user/{userid}/balance/{domain}]
+### Get Data [GET]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + userid (required, string, `543260a89df16e023471dd22`) ... 
+    + domain (required, string, `private`) ... 
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+                
++ Response 200 (application/json)
+
+        {
+          "Gold": 100
+        } 
+
+## transaction [/api/v1/game/{game}/user/{userid}/transaction/{domain}]
+### Add transction [POST]
+
+the response is the new balance for this currency
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + userid (required, string, `543260a89df16e023471dd22`) ... 
+    + domain (required, string, `private`) ... 
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+
+    + Body
+    
+            {
+                "tx" : {"Gold" : 100},
+                "description" : "this is a gold tx"
+            }
+            
++ Response 200 (application/json)
+
+        {
+          "Gold": 200
+        } 
+
+
+## history [/api/v1/game/{game}/user/{userid}/txHistory/{domain}{?skip,limit}]
+### list history [GET]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + userid (required, string, `543260a89df16e023471dd22`) ... 
+    + domain (required, string, `private`) ... 
+    + limit = `10` (optional, number, `10`) ... number of desired responses
+    + skip = `0` (optional, number, `0`) ... skip the `skip` firsts responses
+
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+
++ Response 200 (application/json)
+
+            {
+              "transactions": [
+                {
+                  "domain": "com.clanofthecloud.cloudbuilder.azerty",
+                  "ts": "2015-01-05T14:11:35.489Z",
+                  "tx": {
+                    "Gold": 100
+                  },
+                  "desc": "this is a gold tx"
+                },
+                {
+                  "domain": "com.clanofthecloud.cloudbuilder.azerty",
+                  "ts": "2014-11-27T06:53:26.104Z",
+                  "tx": {
+                    "Gold": 100
+                  },
+                  "desc": "Backoffice transaction"
+                }
+              ],
+              "count": 2
+            }    
+
+
+## Leaderboards [/api/v1/game/{game}/domain/{domain}/leaderboard/{board}{?limit,skip}]
+### list highscore [GET]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + domain (required, string, `private`) ... 
+    + board (required, string, `testboard`) ...
+    + limit = `10` (optional, number, `10`) ... number of desired responses
+    + skip = `0` (optional, number, `0`) ... skip the `skip` firsts responses
+
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+
++ Response 200 (application/json)
+
+            {
+              "testboard": {
+                "maxpage": 1,
+                "page": 1,
+                "rankOfFirst": 1,
+                "scores": [
+                  {
+                    "score": {
+                      "timestamp": "2014-12-15T09:30:56.303Z",
+                      "score": 1400,
+                      "info": null
+                    },
+                    "gamer_id": "5476c2c59ae8e8f922fb70ba",
+                    "profile": {
+                      "displayName": "Gamer",
+                      "lang": "en",
+                      "addr1": "test"
+                    }
+                  },
+                  {
+                    "score": {
+                      "timestamp": "2014-12-15T14:27:06.242Z",
+                      "score": 1200,
+                      "info": null
+                    },
+                    "gamer_id": "5476c2e69ae8e8f922fb70bc",
+                    "profile": {
+                      "displayName": "Guest",
+                      "lang": "en"
+                    }
+                  },
+                  {
+                    "score": {
+                      "timestamp": "2014-10-22T10:09:19.500Z",
+                      "score": 140,
+                      "info": "with Donald"
+                    },
+                    "gamer_id": "541429b6dc346f01314edef3",
+                    "profile": {
+                      "displayName": "Guest",
+                      "lang": "en",
+                      "addr1": "test"
+                    }
+                  },
+                  {
+                    "score": {
+                      "timestamp": "2014-09-26T15:53:39.880Z",
+                      "score": 140,
+                      "info": "with Donald"
+                    },
+                    "gamer_id": "541189411ea82ffa76b7b72a",
+                    "profile": {
+                      "displayName": "Gamer",
+                      "lang": "en",
+                      "addr1": "test"
+                    }
+                  }
+                ]
+              }
+            } 
+            
+
+## Achievements [/api/v1/game/{game}/achievements/{domain}]
+### list Achievements [GET]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + domain (required, string, `private`) ... 
+
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+
++ Response 200 (application/json)
+
+            {
+                "jumper": {
+                "type": "limit",
+                "config": {
+                  "unit": "jump",
+                  "maxValue": "10"
+                }
+              }
+            }     
+  
+          
+## Event [/api/v1/game/{game}/user/{userid}/message/{domain}]
+### send event [POST]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + userid (required, string, `543260a89df16e023471dd22`) ... 
+    + domain (required, string, `private`) ... 
+
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+
+    + Body
+    
+            {
+                "type" : "contest.end",
+                "content" : "contest ended",
+                "osn" : {"en" : "you win the contest", "fr" : "vous avez gagné le concour"}
+            }
+            
+
+            
++ Response 200 (application/json)
+
+            {
+              "id": 1
+            }                
+                   
+
+## Scores [/api/v1/game/{game}/user/{userid}/domain/{domain}/bestscores]
+### Get users best scores [GET]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + userid (required, string, `543260a89df16e023471dd22`) ... 
+    + domain (required, string, `private`) ... 
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+
+            
++ Response 200 (application/json)
+
+            {
+            }                
+                   
+                        
+# Group todo
+route.get "/game/:game/user/:userid/domain/:domain/bestscores", (req, res, next)->
+
+
+
+
