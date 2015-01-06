@@ -351,7 +351,7 @@ Give information about games and domains handled by your company
             }
         }
 
-## User profile [/api/v1/game/{game}/user/{userid}/profile]
+## Profile [/api/v1/game/{game}/user/{userid}/profile]
 ### Get global user profile [GET]
 
 + Parameters
@@ -400,7 +400,7 @@ Give information about games and domains handled by your company
             }
         } 
 
-## User Properties [/api/v1/game/{game}/user/{userid}/domain/{domain}/properties]
+## Properties [/api/v1/game/{game}/user/{userid}/domain/{domain}/properties]
 ### Get user properties [GET]
 
 + Parameters
@@ -421,7 +421,7 @@ Give information about games and domains handled by your company
           "prop2": "value2"
         } 
 
-### Change properties [POST]
+### Change user properties [POST]
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -447,8 +447,8 @@ Give information about games and domains handled by your company
           "done": 1,
         } 
 
-## friends [/api/v1/game/{game}/user/{userid}/friends/{domain}]
-## List friends [GET]
+## Friends [/api/v1/game/{game}/user/{userid}/friends/{domain}]
+## List [GET]
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -469,8 +469,8 @@ Give information about games and domains handled by your company
         }   
 
 
-## relation [/api/v1/game/{game}/user/{userid}/friend/{domain}/{friendid}]
-## forget friend [DELETE]
+## Relation [/api/v1/game/{game}/user/{userid}/friend/{domain}/{friendid}]
+## Forget about a friend [DELETE]
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -490,8 +490,8 @@ Give information about games and domains handled by your company
           "done": 1
         }   
 
-## sponsoring [/api/v1/game/{game}/user/{userid}/friends/{domain}/god]
-### list godfather and godchildren [GET]
+## Sponsoring [/api/v1/game/{game}/user/{userid}/friends/{domain}/god]
+### List godfather and godchildren [GET]
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -576,7 +576,7 @@ Give information about games and domains handled by your company
           "Gold": 100
         } 
 
-## transaction [/api/v1/game/{game}/user/{userid}/transaction/{domain}]
+## Transaction [/api/v1/game/{game}/user/{userid}/transaction/{domain}]
 ### Add transction [POST]
 
 the response is the new balance for this currency
@@ -606,8 +606,8 @@ the response is the new balance for this currency
         } 
 
 
-## history [/api/v1/game/{game}/user/{userid}/txHistory/{domain}{?skip,limit}]
-### list history [GET]
+## History [/api/v1/game/{game}/user/{userid}/txHistory/{domain}{?skip,limit}]
+### List tx history [GET]
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -651,7 +651,7 @@ the response is the new balance for this currency
   
           
 ## Event [/api/v1/game/{game}/user/{userid}/message/{domain}]
-### send event [POST]
+### Send event [POST]
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
