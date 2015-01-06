@@ -1,5 +1,6 @@
 FORMAT: 1A
-HOST:http://195.154.227.44:8080
+
+HOST: https://sandbox-backoffice.clanofthecloud.com
 
 # bo-clanofthecloud API
 
@@ -20,7 +21,7 @@ Every request should have one header set with your credentials :
 Give information about games and domains handled by your company
 
 ## Company [/api/v1/company]
-### Get Company [GET]
+### Get Company Detail [GET]
 
 + Request (application/json)
 
@@ -48,7 +49,30 @@ Give information about games and domains handled by your company
               ]
             }
           ],
+        }  
+        
+        
+## Export [/api/v1/job/company/userexport]
+### Export Company [POST]
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+    
+    + Body 
+    
+            {
+             "data" : { "email" : "me@gmail.com" }
+            }
+             
+             
++ Response 200 (application/json)
+
+        {
         }    
+
 
 # Group Game 
 
