@@ -244,6 +244,8 @@ Access VFS data indivudually.
 
 ### Highscore for a board [GET]
 
+returns user information and score ordered by rank for the specified leaderboard
+
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
     + domain (required, string, `private`) ... 
@@ -325,6 +327,8 @@ Access VFS data indivudually.
 ## Achievements [/api/v1/game/{game}/achievements/{domain}]
 ### List achievements [GET]
 
+Returns the parameters of all the acheivements defined for a game.
+
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
     + domain (required, string, `private`) ... 
@@ -352,6 +356,8 @@ Access VFS data indivudually.
 # Group Users
 ## Members [/api/v1/game/{game}/users{?limit,skip}]
 ### List gamers for a game [GET]
+
+Returns the list of all users registered to a game.
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -400,6 +406,10 @@ Access VFS data indivudually.
 ## Profile [/api/v1/game/{game}/user/{userid}/profile]
 ### Get global user profile [GET]
 
+Returns the global profile of a gamers.
+
+This profile if shared with of the game running on the cloudbuilder system, not only your game)
+
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
     + userid (required, string, `543260a89df16e023471dd22`) ... 
@@ -418,6 +428,8 @@ Access VFS data indivudually.
         } 
 
 ### Change global user profile [POST]
+
+Change the global profile. This impact all the game of the cloudbuilder platform.
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -447,7 +459,15 @@ Access VFS data indivudually.
         } 
 
 ## Properties [/api/v1/game/{game}/user/{userid}/domain/{domain}/properties]
+
+Properties are information related to a user in the specified domain. It's good place to save data related to a user such as his/her level, XP, etc...
+
+This data is available to all game which are allowed to access to the specifed domain.
+
+
 ### Get user properties [GET]
+
+Returns the user properties
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -468,6 +488,8 @@ Access VFS data indivudually.
         } 
 
 ### Change user properties [POST]
+
+Replace/Change the user properties
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -495,6 +517,7 @@ Access VFS data indivudually.
 
 ## Friends [/api/v1/game/{game}/user/{userid}/friends/{domain}]
 ## List [GET]
+
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
