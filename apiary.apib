@@ -18,10 +18,11 @@ Every request should have one header set with your credentials :
 
 # Group Company
 
-Give information about games and domains handled by your company
+## Detail [/api/v1/company]
+### Get information [GET]
 
-## Company [/api/v1/company]
-### Get Company Detail [GET]
+Give information about games and domains handled by your company
+Returns list of games, and for each games the list of allowed domains
 
 + Request (application/json)
 
@@ -32,7 +33,7 @@ Give information about games and domains handled by your company
 + Response 200 (application/json)
 
         {
-          "email": "user",
+          "email": "user@mail.com",
           "name": "user"
           "games": [
             {
@@ -54,6 +55,12 @@ Give information about games and domains handled by your company
         
 ## Export [/api/v1/job/company/userexport]
 ### Export Company [POST]
+
+This method export all data related to users registered for the games of the company.
+One call a day is extremly recommanded.
+
+When job is done, a mail is sent to the email stored in the company information.
+This mail has a link to the file containend the data. This file is in json format.
 
 + Request (application/json)
 
@@ -78,6 +85,8 @@ Give information about games and domains handled by your company
 
 ## Game details [/api/v1/game/{game}]
 ## GET
+
+This method returns detail about the specifed game. You'll get domains, leaderboards, acheivements, etc...
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -133,7 +142,14 @@ Give information about games and domains handled by your company
             } 
 
 ## Game VFS  [/api/v1/game/{game}/storage/{domain}]
+
+Allows to manage vfs in a global manner. Game VFS are shared between users.
+
+It's good place to store game board or any global data for users.
+
 ### List all key-value [GET]
+
+Retreive all the game key-values
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -153,6 +169,8 @@ Give information about games and domains handled by your company
         ]
 
 ### Replace data [POST]
+
+Change/Replace the game data.
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -176,6 +194,9 @@ Give information about games and domains handled by your company
 
 
 ## Single Game VFS  [/api/v1/game/{game}/storage/{domain}/{key}]
+
+Access VFS data indivudually.
+
 ### Read one key [GET]
 
 + Parameters
@@ -220,6 +241,7 @@ Give information about games and domains handled by your company
 
 
 ## Leaderboards [/api/v1/game/{game}/domain/{domain}/leaderboard/{board}{?limit,skip}]
+
 ### Highscore for a board [GET]
 
 + Parameters
