@@ -458,12 +458,60 @@ Change the global profile. This impact all the game of the cloudbuilder platform
             }
         } 
 
+## Storage [/api/v1/game/{game}/user/{userid}/storage/{domain}]
+
+Key-value associated with a user in the specified domain.
+
+### Get Data [GET]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + userid (required, string, `543260a89df16e023471dd22`) ... 
+    + domain (required, string, `private`) ... 
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+                
++ Response 200 (application/json)
+
+        [ 
+        {"fskey": "key01", "fsvalue": "value of key01"}, 
+        {"fskey": "key02", "fsvalue": "value of key02"}
+        ]
+
+
+### Set Data [POST]
+
++ Parameters
+    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
+    + userid (required, string, `543260a89df16e023471dd22`) ... 
+    + domain (required, string, `private`) ... 
+
++ Request (application/json)
+
+    + Headers
+    
+                Authorization : Basic dXNlcjpwYXNzd29yZA==
+                
+    + Body 
+        
+            [ 
+            {"fskey": "key01", "fsvalue": "value of key01"}, 
+            {"fskey": "key02", "fsvalue": "value of key02"}
+            ]
+        
++ Response 200 (application/json)
+
 ## Properties [/api/v1/game/{game}/user/{userid}/domain/{domain}/properties]
 
-Properties are information related to a user in the specified domain. It's good place to save data related to a user such as his/her level, XP, etc...
+Properties are information related to a user in the specified domain. It's good place to save data related to a user ( such as his/her level, XP) which will be involved in match making
 
 This data is available to all game which are allowed to access to the specifed domain.
 
+This properties are usefull when searching for an oppenents in  match making.
 
 ### Get user properties [GET]
 
@@ -515,8 +563,10 @@ Replace/Change the user properties
           "done": 1,
         } 
 
-## Friends [/api/v1/game/{game}/user/{userid}/friends/{domain}]
-## List [GET]
+## Group Relationship
+
+### Friends [/api/v1/game/{game}/user/{userid}/friends/{domain}]
+#### GET
 
 
 + Parameters
@@ -538,8 +588,8 @@ Replace/Change the user properties
         }   
 
 
-## Relation [/api/v1/game/{game}/user/{userid}/friend/{domain}/{friendid}]
-## Forget about a friend [DELETE]
+### Remove a friend [/api/v1/game/{game}/user/{userid}/friend/{domain}/{friendid}]
+#### DELETE
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -559,8 +609,8 @@ Replace/Change the user properties
           "done": 1
         }   
 
-## Sponsoring [/api/v1/game/{game}/user/{userid}/friends/{domain}/god]
-### List godfather and godchildren [GET]
+### Sponsoring [/api/v1/game/{game}/user/{userid}/friends/{domain}/god]
+#### List godfather and godchildren [GET]
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -580,53 +630,9 @@ Replace/Change the user properties
           "godchildren": []
         } 
     
-## Storage [/api/v1/game/{game}/user/{userid}/storage/{domain}]
-### Get Data [GET]
-
-+ Parameters
-    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
-    + userid (required, string, `543260a89df16e023471dd22`) ... 
-    + domain (required, string, `private`) ... 
-
-+ Request (application/json)
-
-    + Headers
-    
-                Authorization : Basic dXNlcjpwYXNzd29yZA==
-                
-+ Response 200 (application/json)
-
-        [ 
-        {"fskey": "key01", "fsvalue": "value of key01"}, 
-        {"fskey": "key02", "fsvalue": "value of key02"}
-        ]
-
-
-### Set Data [POST]
-
-+ Parameters
-    + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
-    + userid (required, string, `543260a89df16e023471dd22`) ... 
-    + domain (required, string, `private`) ... 
-
-+ Request (application/json)
-
-    + Headers
-    
-                Authorization : Basic dXNlcjpwYXNzd29yZA==
-                
-    + Body 
-        
-            [ 
-            {"fskey": "key01", "fsvalue": "value of key01"}, 
-            {"fskey": "key02", "fsvalue": "value of key02"}
-            ]
-        
-+ Response 200 (application/json)
-
-
-## Balance [/api/v1/game/{game}/user/{userid}/balance/{domain}]
-### Get Data [GET]
+## Group Transaction
+### Balance [/api/v1/game/{game}/user/{userid}/balance/{domain}]
+#### GET
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -645,8 +651,8 @@ Replace/Change the user properties
           "Gold": 100
         } 
 
-## Transaction [/api/v1/game/{game}/user/{userid}/transaction/{domain}]
-### Add transction [POST]
+### Add Transaction [/api/v1/game/{game}/user/{userid}/transaction/{domain}]
+#### POST
 
 the response is the new balance for this currency
 
@@ -675,8 +681,8 @@ the response is the new balance for this currency
         } 
 
 
-## History [/api/v1/game/{game}/user/{userid}/txHistory/{domain}{?skip,limit}]
-### List tx history [GET]
+### History [/api/v1/game/{game}/user/{userid}/txHistory/{domain}{?skip,limit}]
+#### GET
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -718,9 +724,9 @@ the response is the new balance for this currency
 
 
   
-          
-## Event [/api/v1/game/{game}/user/{userid}/message/{domain}]
-### Send event [POST]
+## Group Event          
+### Send Event [/api/v1/game/{game}/user/{userid}/message/{domain}]
+#### POST
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
@@ -751,8 +757,11 @@ the response is the new balance for this currency
             }                
                    
 
-## Scores [/api/v1/game/{game}/user/{userid}/domain/{domain}/bestscores]
-### Get users best scores [GET]
+## Group Scores
+### bestscores [/api/v1/game/{game}/user/{userid}/domain/{domain}/bestscores]
+#### GET 
+
+Returns the scores of a user for all the leaderbord he/she play.
 
 + Parameters
     + game (required, string, `com.clanofthecloud.cloudbuilder`) ... the game id 
