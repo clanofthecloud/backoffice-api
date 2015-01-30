@@ -64,6 +64,17 @@ One call a day is extremly recommanded.
 When job is done, a mail is sent to the email stored in the company information.
 This mail has a link to the file containend the data. This file is in json format.
 
+In the fied `data`of the body you may specify which export you want:
+
+- `full`, means complete export.
+- alternatively, you can ask for a partial export by specifying
+    - `startDate` , export only users who connected to since the date (included)
+    - `endDate` , [optional] export only users who connected to before the date (included).
+    if not specified, endDate = startDate.
+
+On partial export, only the transactions made after (or equal) the startDate are included regardless the endDate.
+Only the day is taken in account for startDate and endDate, regardless of the time.
+
 + Request (application/json)
 
     + Headers
@@ -73,7 +84,10 @@ This mail has a link to the file containend the data. This file is in json forma
     + Body 
     
             {
-             "data" : { }
+             "data" : { 
+                "startDate" : "2015-01-29T00:00:00.000Z",
+                "endDate" : "2015-01-29T00:00:00.000Z",
+             }
             }
              
              
