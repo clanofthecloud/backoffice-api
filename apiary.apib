@@ -67,11 +67,11 @@ This mail has a link to the file containend the data. This file is in json forma
 
 In the fied `data`of the body you may specify which export you want:
 
-- `full`, means complete export.
-- alternatively, you can ask for a partial export by specifying
-    - `startDate` , export only users who connected to since the date (included)
-    - `endDate` , [optional] export only users who connected to before the date (included).
-    if not specified, endDate = startDate.
+|Field|Type|Description|
+|---|---|---|
+|full|boolean, optional|specify a full export
+|startDate|json date, optional | begining date, export users connected to after this date (included)
+|endDate|json date, optional| ending date, export users connected to before this date (included). if not specified, endDate = startDate.
 
 On partial export, only the transactions made after (or equal) the startDate are included regardless the endDate.
 Only the day is taken in account for startDate and endDate, regardless of the time.
